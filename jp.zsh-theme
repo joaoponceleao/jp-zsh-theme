@@ -27,6 +27,10 @@ function batt_prompt(){
   fi
 }
 
+function node_prompt(){
+    echo "node@$(node -v)"
+}
+
 if [[ "$TERM" != "dumb" ]] && [[ "$DISABLE_LS_COLORS" != "true" ]]; then
   MODE_INDICATOR="%{$fg_bold[red]%}❮%{$reset_color%}%{$fg[red]%}❮❮%{$reset_color%}"
   local return_status="%{$fg[red]%}%(?..⏎)%{$reset_color%}"
@@ -38,7 +42,7 @@ if [[ "$TERM" != "dumb" ]] && [[ "$DISABLE_LS_COLORS" != "true" ]]; then
   ZSH_THEME_GIT_PROMPT_DIRTY=""
   ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-  RPROMPT='${return_status}$(git_prompt_status)%{$reset_color%} $(batt_prompt) %{$fg_bold[blue]%}$ZSH_PYTHON_PROMPT $(vi_prompt)%($reset_color%}'
+  RPROMPT='${return_status}$(git_prompt_status)%{$reset_color%} $(batt_prompt) %{$fg_bold[blue]%}$ZSH_PYTHON_PROMPT $(node_prompt) $(vi_prompt)%($reset_color%}'
 
   ZSH_THEME_GIT_PROMPT_ADDED="%{$fg_bold[green]%} ●"
   ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg_bold[blue]%} ●"
@@ -56,7 +60,7 @@ else
   ZSH_THEME_GIT_PROMPT_DIRTY=""
   ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-  RPROMPT='${return_status}$(git_prompt_status) $(batt_prompt) ZSH_PYTHON_PROMPT $(vi_prompt)'
+  RPROMPT='${return_status}$(git_prompt_status) $(batt_prompt) ZSH_PYTHON_PROMPT $(node_prompt) $(vi_prompt)'
 
   ZSH_THEME_GIT_PROMPT_ADDED=" +"
   ZSH_THEME_GIT_PROMPT_MODIFIED=" >"
