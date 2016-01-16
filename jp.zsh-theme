@@ -31,28 +31,37 @@ function node_prompt(){
     echo "node@$(node -v)"
 }
 
+function python_prompt(){
+    if [[ $PYENV_VERSION == "system" ]]; then
+        echo "⌘ sys"
+    elif [[ $PYENV_VERSION == "" ]]; then
+        echo "⌘ sys"
+    else
+        echo "⌘ $PYENV_VERSION"
+    fi
+}
 if [[ "$TERM" != "dumb" ]] && [[ "$DISABLE_LS_COLORS" != "true" ]]; then
   MODE_INDICATOR="%{$fg_bold[red]%}❮%{$reset_color%}%{$fg[red]%}❮❮%{$reset_color%}"
   local return_status="%{$fg[red]%}%(?..⏎)%{$reset_color%}"
-  
+
   PROMPT='%{$fg[cyan]%}%c$(git_prompt_info) %(!.%{$fg_bold[red]%}#.%{$fg_bold[green]%}❯)%{$reset_color%} '
-  
+
   ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg[blue]%}git%{$reset_color%}:%{$fg[red]%}"
   ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
   ZSH_THEME_GIT_PROMPT_DIRTY=""
   ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-  RPROMPT='${return_status}$(git_prompt_status)%{$reset_color%} $(batt_prompt) %{$fg_bold[blue]%}$ZSH_PYTHON_PROMPT $(node_prompt) $(vi_prompt)%($reset_color%}'
+  RPROMPT='${return_status}$(git_prompt_status)%{$reset_color%} $(batt_prompt) %{$fg_bold[blue]%}$(python_prompt) $(node_prompt) $(vi_prompt)%($reset_color%}'
 
   ZSH_THEME_GIT_PROMPT_ADDED="%{$fg_bold[green]%} ●"
   ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg_bold[blue]%} ●"
   ZSH_THEME_GIT_PROMPT_DELETED="%{$fg_bold[red]%} ●"
   ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg_bold[red]%} !"
   ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg_bold[yellow]%} ●"
-else 
+else
   MODE_INDICATOR="❮❮❮"
   local return_status="%(?::⏎)"
-  
+
   PROMPT='%c$(git_prompt_info) %(!.#.❯) '
 
   ZSH_THEME_GIT_PROMPT_PREFIX=" git:"
@@ -60,7 +69,7 @@ else
   ZSH_THEME_GIT_PROMPT_DIRTY=""
   ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-  RPROMPT='${return_status}$(git_prompt_status) $(batt_prompt) ZSH_PYTHON_PROMPT $(node_prompt) $(vi_prompt)'
+  RPROMPT='${return_status}$(git_prompt_status) $(batt_prompt) $(python_prompt) $(node_prompt) $(vi_prompt)'
 
   ZSH_THEME_GIT_PROMPT_ADDED=" +"
   ZSH_THEME_GIT_PROMPT_MODIFIED=" >"
